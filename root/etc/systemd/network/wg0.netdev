@@ -1,0 +1,14 @@
+[NetDev]
+Name=wg0
+Kind=wireguard
+
+[WireGuard]
+PrivateKey=******
+ListenPort=auto
+
+[WireGuardPeer]
+PublicKey=******
+AllowedIPs=0.0.0.0/0
+Endpoint=127.0.0.254:981
+PresharedKey=******
+PersistentKeepalive=60
