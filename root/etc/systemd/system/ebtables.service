@@ -1,0 +1,13 @@
+[Unit]
+Description=Ethernet bridge table
+Before=network-pre.target
+Wants=network-pre.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/etc/systemd/system/ebtables_start start
+ExecStop=/etc/systemd/system/ebtables_start stop
+
+[Install]
+WantedBy=multi-user.target

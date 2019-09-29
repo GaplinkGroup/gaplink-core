@@ -1,0 +1,17 @@
+[Match]
+Name=lo
+
+[Network]
+
+[Address]
+
+[Route]
+Table=201
+Destination=0.0.0.0/0
+Type=local
+
+[RoutingPolicyRule]
+FirewallMark=8192
+Table=201
+
+[Route]
