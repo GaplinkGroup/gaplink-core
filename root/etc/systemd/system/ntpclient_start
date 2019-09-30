@@ -1,0 +1,16 @@
+#!/bin/bash
+
+x=1
+while [ $x -le 10 ]
+do
+  /usr/bin/timeout 10 /usr/local/bin/ntpclient -h 0.arch.pool.ntp.org -d -s
+  [ $? -eq 0 ] && break
+  x=$(( $x + 1 ))
+done
+
+if [ $x -eq 10 ]
+then
+    exit 1
+fi
+
+exit 0

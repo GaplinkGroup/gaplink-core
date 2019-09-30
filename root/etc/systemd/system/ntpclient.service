@@ -4,8 +4,7 @@ After=network.target
 
 [Service]
 Type=oneshot
-#ExecStartPre=/usr/bin/sleep 30
-ExecStart=/usr/bin/timeout 10 /usr/local/bin/ntpclient -h 0.arch.pool.ntp.org -d -s
+ExecStart=/etc/systemd/system/ntpclient_start
 
 [Install]
 WantedBy=multi-user.target
