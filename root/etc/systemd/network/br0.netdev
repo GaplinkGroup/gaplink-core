@@ -2,3 +2,6 @@
 Name=br0
 Kind=bridge
 MACAddress=00:e0:4c:36:0e:13
+
+[Bridge]
+MulticastSnooping=false
