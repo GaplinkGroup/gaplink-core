@@ -23,11 +23,10 @@ COMMIT
 :OUTPUT ACCEPT [1:112]
 :POSTROUTING ACCEPT [42:6336]
 :V2RAY - [0:0]
+:DNS_REDIRECT - [0:0]
+-A PREROUTING -i br0 -p tcp -m tcp --dport 8311 -d 100.64.0.1/32 -j DNAT --to-destination 169.254.1.1:8311
 #-A PREROUTING -i br0 -p udp -m udp --dport 53 -j DNAT --to-destination 169.254.1.1:5353
--A PREROUTING -i br0 -p udp -m udp --dport 53 -m string --string "google" --algo bm -j DNAT --to-destination 169.254.1.1:5400
--A PREROUTING -i br0 -p udp -m udp --dport 53 -m string --string "youtube" --algo bm -j DNAT --to-destination 169.254.1.1:5400
--A PREROUTING -i br0 -p udp -m udp --dport 53 -m string --string "wikipedia" --algo bm -j DNAT --to-destination 169.254.1.1:5400
--A PREROUTING -i br0 -p udp -m udp --dport 53 -m string --string "steamcommunity" --algo bm -j DNAT --to-destination 169.254.1.1:5400
+-A PREROUTING -i br0 -p udp -m udp --dport 53 -j DNS_REDIRECT
 -A PREROUTING -p tcp -m set --match-set gfw dst -j V2RAY
 -A PREROUTING -p tcp -m set --match-set gfw_net dst -j V2RAY
 -A OUTPUT -p tcp -d 1.1.1.1 -j V2RAY

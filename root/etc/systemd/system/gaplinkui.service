@@ -1,0 +1,13 @@
+[Unit]
+Description=Gaplink webadmin
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+PIDFile=/run/gaplinkui.pid
+ExecStart=/usr/bin/php -S 169.254.1.1:8311 -t /opt/gaplink-ui/public
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
