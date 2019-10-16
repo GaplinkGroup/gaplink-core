@@ -35,7 +35,7 @@
    "protocol": "dokodemo-door",
    "settings": {
      "network": "tcp,udp",
-     "followRedirect": true // true for iptables incoming
+     "followRedirect": true
    },
    "sniffing": {
      "enabled": true,
@@ -72,7 +72,7 @@
         "network": "tcp",
         "security": "",
         "sockopt": {
-           "mark": 255  //outbound SO_MARK
+           "mark": 255
         }
       },
       "tag": "proxy"
