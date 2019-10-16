@@ -55,12 +55,12 @@
       "settings": {
         "vnext": [
           {
-            "address": "127.0.0.254",
-            "port": 12034,
+            "address": "$SERVER_V2RAY_ADDRESS",
+            "port": $SERVER_V2RAY_PORT,
             "users": [
               {
                 "alterId": 100,
-                "id": "54ec98ce-0b28-46f2-840e-9f1e62c84509",
+                "id": "$SERVER_V2RAY_UUID",
                 "level": 8,
                 "security": "auto"
               }
