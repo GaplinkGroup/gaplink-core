@@ -7,7 +7,7 @@ SERVER_V2RAY_UUID=$2
 [ -z "$SERVER_V2RAY_PORT" ] && exit 1
 [ -z "$SERVER_V2RAY_UUID" ] && exit 1
 
-bash <(curl -L -s https://install.direct/go.sh)
+curl -L -s https://install.direct/go.sh | bash -s --
 
 mkdir -p /etc/v2ray
 cat > /etc/v2ray/config.json <<EOF
