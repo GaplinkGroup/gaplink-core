@@ -5,7 +5,6 @@ Wants=network.target iptables.service
 
 [Service]
 Type=simple
-PIDFile=/run/gaplinkui.pid
 ExecStart=/usr/bin/php -S 169.254.1.1:8311 -t /opt/gaplink-ui/public
 ExecStartPost=/opt/gaplink-ui/utils/reload_domains.sh
 Restart=on-failure
