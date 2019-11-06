@@ -26,7 +26,7 @@ COMMIT
 :DNS_REDIRECT - [0:0]
 -A PREROUTING -i br0 -p tcp -m tcp --dport 80 -d 100.64.0.1/32 -j DNAT --to-destination 169.254.1.1:8311
 #-A PREROUTING -i br0 -p udp -m udp --dport 53 -j DNAT --to-destination 169.254.1.1:5353
--A PREROUTING -i br0 -p udp -m udp --dport 53 -m string --hex-string "|03676170046c696e6b|" --algo bm --to 65535 -j DNAT --to-destination 169.254.1.1:5400
+-A PREROUTING -i br0 -p udp -m udp --dport 53 -m string --hex-string "|07|gaplink|08|internal|" --algo bm --to 65535 -j DNAT --to-destination 169.254.1.1:5400
 -A PREROUTING -i br0 -p udp -m udp --dport 53 -j DNS_REDIRECT
 -A PREROUTING -p tcp -m set --match-set gfw dst -j V2RAY
 -A PREROUTING -p tcp -m set --match-set gfw_net dst -j V2RAY
