@@ -1,7 +1,8 @@
 [Unit]
 Description=Gaplink webadmin
 After=network.target iptables.service
-Wants=network.target iptables.service
+Wants=network.target
+Requires=iptables.service
 
 [Service]
 Type=simple
