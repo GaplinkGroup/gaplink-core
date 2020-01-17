@@ -3,3 +3,4 @@ Name=dnscap
 
 [Network]
 Address=169.254.1.1/24
+Address=fc00:ffff:ffff:aaaa::1/64
