@@ -4,3 +4,12 @@ Name=br0
 [Network]
 DHCP=yes
 IPv6PrivacyExtensions=yes
+
+[DHCPv4]
+UseDNS=no
+
+[DHCPv6]
+UseDNS=no
+
+[IPv6AcceptRA]
+UseDNS=no
