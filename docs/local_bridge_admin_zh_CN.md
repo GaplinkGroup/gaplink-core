@@ -20,25 +20,26 @@
 假设这里使用树莓派4B
 则参考[这里](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-4#installation)安装
 
-安装的最后一步把 gaplink-builder 复制到TF卡里的 /mnt/root 目录下，假设tf卡挂载/mnt下
-```
-git clone https://github.com/GaplinkGroup/gaplink-builder.git
-pushd gaplink-builder
-git submodule init
-git submodule update
-popd
-mv gaplink-builder /mnt/root/
-```
-
-#### 安装Gaplink
+最后
 
 1. 把tf插入树莓派，树莓派以普通设备用网线接入到路由器下
 2. 用串行接口或者ssh登录树莓派root帐号
-3. 
+
+
+#### 安装Gaplink
+
+继续上面的步骤，已经ssh登录树莓派root帐号之后
+
 ```
-cd /root/gaplink-builder/archlinuxarm
-sh pacman-init.sh # 继续完成树莓派系统的安装
-sh bootstrap.sh # 初始化Gaplink
+cd /root/
+pacman-key --init
+pacman-key --populate archlinuxarm
+curl -L -o gaplink-builder.tar.gz https://github.com/GaplinkGroup/gaplink-builder/archive/master.tar.gz
+tar xf gaplink-builder.tar.gz
+
+cd gaplink-builder-master/archlinuxarm
+sh bootstrap.sh
+sync
 ```
 
 ## 配置
