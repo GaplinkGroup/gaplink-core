@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 SERVER_V2RAY_PORT=$1
@@ -7,42 +6,43 @@ SERVER_V2RAY_UUID=$2
 [ -z "$SERVER_V2RAY_PORT" ] && exit 1
 [ -z "$SERVER_V2RAY_UUID" ] && exit 1
 
-curl -L -s https://install.direct/go.sh | bash -s --
+docker pull v2fly/v2fly-core
 
 mkdir -p /etc/v2ray
+
+docker run --rm --workdir /etc/v2ray -v /etc/v2ray:/etc/v2ray v2fly/v2fly-core:latest v2ctl cert --ca --domain=EXTERNAL_IP --expire=87600h --file=server -name=common -org=common
+
 cat > /etc/v2ray/config.json <<EOF
 {
-  "inbound": {
-    "streamSettings": {
-      "network": "tcp",
-      "kcpSettings": {
-        "uplinkCapacity": 20,
-        "downlinkCapacity": 100,
-        "readBufferSize": 2,
-        "mtu": 1350,
-        "header": {
-          "type": "none",
-          "request": null,
-          "response": null
+  "inbounds": [
+    {
+      "port": $SERVER_V2RAY_PORT,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "$SERVER_V2RAY_UUID",
+            "alterId": 100
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "h2",
+        "httpSettings": {
+          "path": "/admin"
         },
-        "tti": 50,
-        "congestion": false,
-        "writeBufferSize": 2
-      }
-    },
-    "protocol": "vmess",
-    "port": $SERVER_V2RAY_PORT,
-    "settings": {
-      "clients": [
-        {
-          "alterId": 100,
-          "security": "auto",
-          "id": "$SERVER_V2RAY_UUID",
-          "level": 1
+        "security": "tls",
+        "tlsSettings": {
+          "certificates": [
+            {
+              "certificateFile": "/etc/v2ray/server_cert.pem",
+              "keyFile": "/etc/v2ray/server_key.pem"
+            }
+          ]
         }
-      ]
+      }
     }
-  },
+  ],
   "outboundDetour": [
     {
       "tag": "blocked",
@@ -89,7 +89,8 @@ cat > /etc/v2ray/config.json <<EOF
   }
 }
 EOF
+docker create --restart always -v /etc/v2ray:/etc/v2ray -p $SERVER_V2RAY_PORT:$SERVER_V2RAY_PORT --name v2ray v2fly/v2fly-core:latest
 
-systemctl daemon-reload
-systemctl enable v2ray
-systemctl restart v2ray
+echo "Server CA: "
+cat /etc/v2ray/server_cert.pem | base64 --wrap=0
+echo
