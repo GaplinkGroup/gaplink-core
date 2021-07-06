@@ -4,6 +4,7 @@
       "1.1.1.1"
     ]
   },
+
   "inbounds": [
     {
       "port": 10808,
@@ -44,28 +45,28 @@
           }
       }
     },
- {
-   "port": 10810,
-   "protocol": "dokodemo-door",
-   "settings": {
-     "network": "tcp,udp",
-     "followRedirect": true
-   },
-   "sniffing": {
-     "enabled": true,
-     "destOverride": ["http", "tls"]
-   }
- }
+    {
+      "port": 10810,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "network": "tcp,udp",
+        "followRedirect": true
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls"]
+      }
+    }
   ],
+
   "log": {
     "loglevel": "warning"
   },
+
   "outbounds": [
     {
-      "mux": {
-        "enabled": false
-      },
       "protocol": "vmess",
+      "tag": "proxy",
       "settings": {
         "vnext": [
           {
@@ -73,23 +74,32 @@
             "port": $SERVER_V2RAY_PORT,
             "users": [
               {
-                "alterId": 100,
                 "id": "$SERVER_V2RAY_UUID",
-                "level": 8,
-                "security": "auto"
+                "alterId": 100
               }
             ]
           }
         ]
       },
       "streamSettings": {
-        "network": "tcp",
-        "security": "",
-        "sockopt": {
-           "mark": 255
+        "network": "h2",
+        "httpSettings": {
+          "path": "/admin"
+        },
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "EXTERNAL_IP",
+          "allowInsecure": false,
+          "alpn": ["http/1.1"],
+          "certificates": [
+            {
+              "usage": "verify",
+              "certificateFile": "/etc/v2ray/server.crt"
+            }
+          ],
+          "disableSystemRoot": true
         }
-      },
-      "tag": "proxy"
+      }
     },
     {
       "protocol": "freedom",
@@ -106,6 +116,7 @@
       "tag": "block"
     }
   ],
+
   "policy": {
     "levels": {
       "8": {
@@ -120,9 +131,11 @@
       "statsInboundDownlink": true
     }
   },
+
   "routing": {
     "domainStrategy": "IPIfNonMatch",
     "rules": []
   },
+
   "stats": {}
 }
